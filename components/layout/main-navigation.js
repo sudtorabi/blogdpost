@@ -16,7 +16,7 @@ const MainNavigation = () => {
             <ActiveLink href="/">Home Page</ActiveLink>
           </li>
           <li>
-            <ActiveLink href="/blogposts">All Posts</ActiveLink>
+            <ActiveLink href="/posts">All Posts</ActiveLink>
           </li>
           <li>
             <ActiveLink href="/contact">Contact Me</ActiveLink>

@@ -1,20 +1,47 @@
-export const getFeaturedData = async () => {
-  const dummyData = [
-    { id: "", title: "", contexnt: "", featured: true },
-    // { id: "", title: "", contexnt: "", featured: true },
-  ];
-  return dummyData;
+import fs from "fs";
+import matter from "gray-matter";
+import path from "path";
+
+const postsDirectoryPath = path.join(process.cwd(), "content");
+
+export const getFeaturedData = () => {
+  const allPostsData = getAllPostsData();
+  const featuredPosts = allPostsData.filter((post) => post.featured);
+  return featuredPosts;
 };
 
-export const getAllPostsData = async () => {
-  const dummyData = [
-    { id: "", title: "", contexnt: "", featured: true },
-    { id: "", title: "", contexnt: "", featured: false },
-  ];
-  return dummyData;
+const extractPostDataFromFile = (fileName) => {
+  const filePath = path.join(postsDirectoryPath, fileName);
+  const fileData = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(fileData);
+  const postData = { ...data, content, slug: fileName.replace(/\.md$/, "") };
+  console.log(postData);
+  return postData;
 };
 
-export const getIndividualPostDetail = async (id) => {
-  postDetail = {};
+export const getAllPostsData = () => {
+  const postsFileNames = fs.readdirSync(postsDirectoryPath);
+  const allPostsData = postsFileNames.map((filename) =>
+    extractPostDataFromFile(filename)
+  );
+  const sortedPosts = allPostsData.sort((postA, postB) =>
+    postA.date > postB.date ? -1 : 1
+  );
+  console.log(sortedPosts);
+  return sortedPosts;
+};
+
+export const getIndividualPostDetail = (slug) => {
+  const postsFileNames = fs.readdirSync(postsDirectoryPath);
+  const desiredFileName = postsFileNames.find(
+    (fileName) => fileName.replace(/\.md$/, "") === slug
+  );
+  const postDetail = extractPostDataFromFile(desiredFileName);
   return postDetail;
+};
+
+export const getAllSlugs = () => {
+  const postsFileNames = fs.readdirSync(postsDirectoryPath);
+  const allPostSlugs = postsFileNames.map((name) => name.replace(/\.md$/, ""));
+  return allPostSlugs;
 };
