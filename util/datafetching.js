@@ -15,7 +15,6 @@ const extractPostDataFromFile = (fileName) => {
   const fileData = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileData);
   const postData = { ...data, content, slug: fileName.replace(/\.md$/, "") };
-  console.log(postData);
   return postData;
 };
 
@@ -27,7 +26,6 @@ export const getAllPostsData = () => {
   const sortedPosts = allPostsData.sort((postA, postB) =>
     postA.date > postB.date ? -1 : 1
   );
-  console.log(sortedPosts);
   return sortedPosts;
 };
 
