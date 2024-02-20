@@ -1,8 +1,16 @@
 import AllPosts from "@/components/posts/AllPosts";
 import { getAllPostsData } from "@/util/datafetching";
+import Head from "next/head";
 
 const BlogPosts = (props) => {
-  return <AllPosts list={props.allPosts} />;
+  return (
+    <>
+      <Head>
+        <title>all posts</title>
+      </Head>
+      <AllPosts list={props.allPosts} />
+    </>
+  );
 };
 
 export default BlogPosts;

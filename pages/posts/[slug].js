@@ -1,8 +1,20 @@
 import PostContent from "@/components/posts/post-detail/PostContent";
 import { getAllSlugs, getIndividualPostDetail } from "@/util/datafetching";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 const PostDetailPage = (props) => {
-  return <PostContent post={props.post} />;
+  // const router = useRouter();
+  return (
+    <>
+      <Head>
+        {/* <title>{router.query.slug}</title> */}
+        <title>{props.post.title}</title>
+        <meta name="description" content={props.post.excerpt} />
+      </Head>
+      <PostContent post={props.post} />;
+    </>
+  );
 };
 
 export default PostDetailPage;
